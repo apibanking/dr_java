@@ -2,9 +2,8 @@
 # steps (to run)
 
 1. clone the code
-1. run the client with defaults java -cp args4j-2.33.jar:. DR
-1. run the client add see help java -cp args4j-2.33.jar:. DR -?
 1. run the client with VPN java -cp args4j-2.33.jar:. DR -disableClientAuth
+1. run the client add see help java -cp args4j-2.33.jar:. DR -?
 
 
 # steps (to develop)
