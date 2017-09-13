@@ -59,18 +59,6 @@ public class DR {
    @Option(name="-?", usage="display this page")
    private boolean showUsage = false;
    
-   @Option(name="-transferAmount", usage="the transferAmount")
-   private float transferAmount = 10;
-   
-   @Option(name="-beneficiaryAccountNo", usage="the beneficiary Account No")
-   private String beneficiaryAccountNo = "026291800001191";
-   @Option(name="-beneficiaryIFSC", usage="the beneficiary Account IFSC")
-   private String beneficiaryIFSC = "HDFC0000001";
-   @Option(name="-beneficiaryMobileNo", usage="the beneficiary Mobile No")
-   private String beneficiaryMobileNo = "9869581569";
-   @Option(name="-beneficiaryMMID", usage="the beneficiary Account MMID")
-   private String beneficiaryMMID = "9532870";
-   
    @Option(name="-disableClientAuth", usage="to disable client auth (2-way ssl)")
    private boolean disableClientAuth = false;
 
@@ -96,6 +84,7 @@ public class DR {
       }
 
       enableTrace();
+      setTrustStore();
       setClientCertificate();
 
       Path currentRelativePath = Paths.get("");
@@ -118,10 +107,10 @@ public class DR {
 
       // set the url, the URL for clientAuth (2-way SSL) & simple SSL are different
       if (disableClientAuth) {
-        ((BindingProvider)client).getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, "https://uatsky.yesbank.in/app/uat/fundsTransferByCustomerService2");
+        ((BindingProvider)client).getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, "https://uatsky.yesbank.in/app/uat/DomesticRemittanceService");
 
       } else {
-        ((BindingProvider)client).getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, "https://uatsky.yesbank.in:444/app/uat/ssl/fundsTransferByCustomerSevice2");        
+        ((BindingProvider)client).getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, "https://uatsky.yesbank.in:444/app/uat/ssl/DomesticRemittanceService");        
       }
 
       // set the user & password
@@ -199,6 +188,11 @@ public class DR {
      System.setProperty("com.sun.xml.internal.ws.transport.http.client.HttpTransportPipe.dump", "true");
      System.setProperty("com.sun.xml.ws.transport.http.HttpAdapter.dump", "true");
      System.setProperty("com.sun.xml.internal.ws.transport.http.HttpAdapter.dump", "true");
+   }
+
+   private void setTrustStore() {
+     System.setProperty("javax.net.ssl.trustStore", "ybl.jks");
+     System.setProperty("javax.net.ssl.trustStorePassword", "password");
    }
 
    private void setClientCertificate() {
